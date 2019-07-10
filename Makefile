@@ -1,9 +1,11 @@
 CC = gcc
-FILE = test.c 
-LIB_LOCATION = $(DYLD_LIBRARY_PATH)
+FILE = printf.c main.c
+LIB_STANDARD = -L $(LIBRARY_PATH)/standard -I $(LIBRARY_PATH)/standard -lstandard
+LIB_BUFFER = -L $(LIBRARY_PATH)/buffers -I $(LIBRARY_PATH)/buffers -lbuffer
+
 
 all:
-	$(CC) $(FILE) -L $(LIB_LOCATION) -I $(LIB_LOCATION) -lnc 
+	$(CC) $(FILE) -g $(LIB_BUFFER) $(LIB_STANDARD)
 
 clean:
 	rm a.out
