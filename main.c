@@ -1,7 +1,9 @@
-#include "header.h"
+#include "nc_printf.h"
+#include <stdio.h>
 
 int main(int argc, char **argv)
 {
    char *str1 = "this %a is my string  okay";
-   nc_printf("this %a is%a ok%ay", 42, 42, 42);
+   nc_printf("%o\t%pthis %s is%i ok%dy",100, str1, "******", 42, 42);
+   printf("%o\t%pthis %s is%i ok%dy",100, str1, "******", 42, 42);
 }
