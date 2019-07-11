@@ -13,4 +13,9 @@ void    str_function(dynamic_buffer *buff, va_list args);
 void    ul_function(dynamic_buffer *buff, va_list args, int base);
 void    octal_function(dynamic_buffer *buff, va_list args);
 void    ptr_function(dynamic_buffer *buff, va_list args);
+void    hex_function(dynamic_buffer *buff, va_list args);
+void    char_function(dynamic_buffer *buff, va_list args);
+
+extern func table[];
+
 #endif

@@ -1,5 +1,7 @@
 CC = gcc
-FILE = printf.c main.c
+FILE = printf.c \
+main.c \
+helpers.c
 LIB_STANDARD = -L $(LIBRARY_PATH)/standard -I $(LIBRARY_PATH)/standard -lstandard
 LIB_BUFFER = -L $(LIBRARY_PATH)/buffers -I $(LIBRARY_PATH)/buffers -lbuffer
 
