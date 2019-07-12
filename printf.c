@@ -29,12 +29,14 @@ void    init(char *format, char **stepper, dynamic_buffer **buff)
 
 int     nc_printf(const char * restrict format, ...)
 {
-    va_list args;
-    dynamic_buffer *buff;
-    char *stepper;
+    va_list         args;
+    dynamic_buffer  *buff;
+    char            *stepper;
+    int             size;
 
     va_start(args, format);
-    init((char *)format, &stepper, &buff);
+    stepper = (char *)format;
+    buff = create_dynamic_buffer();
     while(*stepper)
     {
         if (*stepper == '%')
@@ -44,8 +46,8 @@ int     nc_printf(const char * restrict format, ...)
         if (*stepper)
             stepper++;
     }
-    debug_print_buffer(buff);
     delete_dynamic_buffer(buff);
+    size = print_buffer(buff, 1);
     va_end(args);
-    return 0; 
+    return size; 
 }
