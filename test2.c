@@ -1,57 +1,62 @@
-#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include "nc_lib_buffer.h"
+#include "nc_printf.h"
 
-typedef void (*func)(dynamic_buffer *buff);
+func table[] = {};
 
-void n1(dynamic_buffer *buff){}
-void n2(dynamic_buffer *buff){}
-void n3(dynamic_buffer *buff){}
-void other(dynamic_buffer *buff){}
+void    error_function(dynamic_buffer *buff, va_list args){};
 
-func table[] = {n1, n2, n3, other};
-
-int get_index(char *str)
+void    int_function(dynamic_buffer *buff, va_list args)
 {
-    int index;
+    int     int_num;
+    char    *str_num;
 
-    index = atoi(str);
-    if (index > 2 || index < 0)
-        return 3;
-    return index;
+    int_num = va_arg(args, int);
+    str_num = nc_itoa(int_num);
+    add_to_buffer(buff, str_num, nc_strlen(str_num));
+    free(str_num);
 }
 
-char *handle_flag(dynamic_buffer *buff, char *str)
+
+func    get_function(char *str)
 {
-    str++;
-    int index = get_index(str);
-    table[index](buff);
+    if (*str >= 'a' && *str <= 'z')
+        return (table[*str - 'a']);
+    return error_function;
+}
+
+
+char    *handle_flag_n_update(dynamic_buffer *buff, va_list args, char *str)
+{
+    func function;
     
-    if (*str)
-        str++;
+    str++;
+    function = get_function(str);
+    function(buff, args);
     return str;
 }
 
-void    nc_printf(char *input, ...)
+int     nc_printf(const char * restrict format, ...)
 {
+    va_list args;
     dynamic_buffer *buff;
+    char    *stepper;
+
+    stepper = (char *)stepper;
+    va_start(format, args);
     buff = create_dynamic_buffer();
-
-    while(*input)
+    while(*stepper)
     {
-        if (*input == '%')
-            input = handle_flag(buff, input);
+        if (*stepper == '%')
+            stepper = handle_flag_n_update(buff, args, stepper);
         else
-            add_to_buffer(buff, input, 1);
-        if (*input)
-            input++;
+            add_to_buffer(buff, stepper, 1);
+        if (*stepper)
+            stepper++;
     }
-    debug_print_buffer(buff);
+    size = print_buffer(buff);
+    va_end(args)
     delete_dynamic_buffer(buff);
-}
-
-
-int main(void)
-{
-    char *str1 = "this is my string ";
-    nc_printf(str1);
+    return (size);
 }
