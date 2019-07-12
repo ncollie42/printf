@@ -4,7 +4,7 @@
 func    table[] = {error_function,
 error_function, //a
 error_function, //b
-char_function, //c
+char_function,  //c
 int_function,   //d
 error_function, //e
 error_function, //f
@@ -22,7 +22,7 @@ error_function, //q
 error_function, //r
 str_function,   //s
 error_function, //t
-error_function, //u
+unsgined_function, //u
 error_function, //v
 error_function, //w
 hex_function,   //x
@@ -30,6 +30,17 @@ error_function, //y
 error_function};//z
 
 void    error_function(dynamic_buffer *buff, va_list args){};
+
+void    unsgined_function(dynamic_buffer *buff, va_list args)
+{
+    char            *str_number;
+    unsigned long   ul_number;
+
+    ul_number = va_arg(args, unsigned long);
+    str_number = nc_itoa_base(ul_number, 10);
+    add_to_buffer(buff, str_number, nc_strlen(str_number));
+    free(str_number);
+}
 
 void    hex_function(dynamic_buffer *buff, va_list args)
 {

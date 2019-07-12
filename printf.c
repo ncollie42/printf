@@ -21,12 +21,6 @@ char *handle_flag_n_update_ptr(dynamic_buffer *buff, va_list args, char *str)
     return str;
 }
 
-void    init(char *format, char **stepper, dynamic_buffer **buff)
-{
-    *stepper = (char *)format;
-    *buff = create_dynamic_buffer();
-}
-
 int     nc_printf(const char * restrict format, ...)
 {
     va_list         args;
